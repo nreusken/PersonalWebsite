@@ -1,0 +1,59 @@
+:root {
+  --primary: #fb951d;
+  --secondary: #44c3b3;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  height: 80vh;
+  justify-content: center;
+}
+
+.shape {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+  background: #6E91A1;
+  animation: morph 8s ease-in-out infinite;
+  border-radius: 60% 50% 50% 60% / 60% 50% 50% 60%;
+  height: 70vh;
+  transition: all 1s ease-in-out;
+  width: 75vw;
+  z-index: 5;
+}
+
+.avatar {
+  z-index: -1;
+}
+
+.border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #467386;
+  animation: morph 8s ease-in-out infinite;
+  border-radius: 60% 50% 50% 60% / 60% 50% 50% 60%;
+  height: 75vh;
+  transition: all 1s ease-in-out;
+  width: 80vw;
+  z-index: 5;
+}
+
+@keyframes morph {
+  0% {
+      border-radius:  60% 40% 30% 70% / 60% 30% 70% 40%;
+      /* background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); */
+  } 
+  
+  50% {
+      border-radius:  30% 60% 70% 40% / 50% 60% 30% 60%;
+      /* background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); */
+  }
+  
+  100% {
+    border-radius:  60% 40% 30% 70% / 60% 30% 70% 40%;
+    /* background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); */
+  } 
+}

@@ -1,6 +1,8 @@
 import React from 'react';
+import './App.css';
 // import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import PropTypes from 'prop-types';
@@ -15,6 +17,28 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Avatar from '@mui/material/Avatar';
+import Masonry from '@mui/lab/Masonry';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import {CardActionArea} from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // Purple and green play nicely together.
+      main: '#AA8B39',
+      text: '#032536',
+    },
+    secondary: {
+      // This is green.A700 as hex.
+      main: '#AA5039',
+    },
+  },
+});
+
+const heights = [250, 125, 250, 250, 250, 250, 250];
 
 const Item = styled(Paper)(({theme}) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -143,23 +167,92 @@ function App(props) {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <AppBar color="transparent" sx={{backdropFilter: 'blur(10px)'}}>
         <Toolbar>
-          <Typography variant="h5" component="div" sx={{flexGrow: 1}}>
+          <Typography color="secondary" variant="h4" sx={{flexGrow: 1}}>
             Nout Reusken
           </Typography>
           <Tabs value={value} onChange={handleChange}
             aria-label="nav tabs example">
-            <LinkTab label="About me" href="/drafts" />
-            <LinkTab label="Projects" href="/trash" />
+            <LinkTab label="About me" href="#aboutme" />
+            <LinkTab label="Projects" href="#projects" />
+            <LinkTab label="Resume" href="/trash" />
             <LinkTab label="Contact" href="/spam" />
           </Tabs>
         </Toolbar>
       </AppBar>
       <Box sx={{my: 2}}>
       </Box>
-      <Toolbar id="back-to-top-anchor"/>
+      <Box>
+        <Toolbar id="back-to-top-anchor"/>
+        <div className="container">
+          <div className="border">
+            <div className="shape">
+              <div className="content">
+                <Grid container spacing={20}>
+                  <Grid xs={4} className='avatar'>
+                    <Avatar
+                      alt="Nout Reusken"
+                      src="/static/images/avatar/1.jpg"
+                      sx={{width: 300, height: 300}}
+                    />
+                  </Grid>
+                  <Grid xs={8}>
+                    <Typography sx={{fontWeight: 'light'}}
+                      variant="h2" color='primary.text'>
+                      Meet
+                    </Typography>
+                    <Typography sx={{fontWeight: 'bold'}}
+                      variant="h2" color='secondary'>
+                      Nout Reusken
+                    </Typography>
+                    <Typography sx={{fontWeight: 'light'}}
+                      variant="h6" color='#113C51'>
+                        - Student at University of Califonia, Santa Cruz.
+                        Studying Computer Science, BS.
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Toolbar/>
+        <Toolbar/>
+      </Box>
+      <Masonry columns={3} spacing={3} id='projects'>
+        {heights.map((height, index) => {
+          if (height !== 125) {
+            return (
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image="/icon.jpg"
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Lizard
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lizards are a widespread group of squamate reptiles,
+                      with over 6,000
+                      species, ranging across all continents except Antarctica
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>);
+          } else {
+            return ( <Typography sx={{fontWeight: 'bold'}}
+              variant="h2" color='secondary' align='center'>
+              Projects
+            </Typography>);
+          };
+        })}
+      </Masonry>
       <Grid container spacing={10} sx={{height: '1000px'}}>
         <Grid xs={8} sx={{height: '100px'}}>
           <Item sx={{height: '80px'}}>xs=8</Item>
@@ -179,7 +272,7 @@ function App(props) {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-    </div>
+    </ThemeProvider>
   );
 }
 
