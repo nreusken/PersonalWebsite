@@ -8,9 +8,9 @@ import Slide from '@mui/material/Slide';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {styled} from '@mui/material/styles';
+// import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -21,8 +21,20 @@ import Avatar from '@mui/material/Avatar';
 import Masonry from '@mui/lab/Masonry';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import {CardActionArea} from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import Image from 'mui-image';
+import CallIcon from '@mui/icons-material/Call';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const theme = createTheme({
   palette: {
@@ -38,15 +50,33 @@ const theme = createTheme({
   },
 });
 
-const heights = [250, 125, 250, 250, 250, 250, 250];
+const heights = [300, 125, 300, 0, 300];
+const projects = [['Mulithreaded Webserver', 'Using C programming langu'+
+  'age, created multi-threaded HTML webserver.'+
+      ' Also included a proxy that handles load balancing using multiple serv'+
+      'ers and caching on proxy server. Allowed for simultaneous connections a'+
+      'nd caching for small html files.'],
+['', ''],
+['CSE 115A: Introduction to Software Engineering Project', 'Created and fully '+
+  'deployed a full stack web application in a team of 5 members using the so'+
+  'ftware development process, Scrum. Created a social media platform, allowi'+
+  'ng users to have to comment and like certain stock option while also gettin'+
+  'g stock recommendations and stock data visualization. Used the following te'+
+  'chnologies: Flask, React.js, and PostgreSQL'], ['ggg', ''],
+['Email Web Application', 'Created a fully deployable full stack web '+
+'application by myself. Allowed different users to email other users,'+
+  ' read their incoming emails and organize their mailboxes. Created th'+
+  'e web application using a N.E.R.P(node.js, ExpressJS, ReactJS, Postgre'+
+  'SQL) web application stack. Also created front-end and back-end test fo'+
+  'r quality assurance.'], ['ggg', '']];
 
-const Item = styled(Paper)(({theme}) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+// const Item = styled(Paper)(({theme}) => ({
+//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+//   ...theme.typography.body2,
+//   padding: theme.spacing(1),
+//   textAlign: 'center',
+//   color: theme.palette.text.secondary,
+// }));
 
 /**
  *
@@ -145,7 +175,16 @@ function LinkTab(props) {
     <Tab
       component="a"
       onClick={(event) => {
-        event.preventDefault();
+        const anchor = (event.target.ownerDocument || document).querySelector(
+          '#' + event.target.id + '-anchor',
+        );
+
+        if (anchor) {
+          anchor.scrollIntoView({
+            block: 'center',
+            behavior: 'smooth',
+          });
+        }
       }}
       {...props}
     />
@@ -175,10 +214,10 @@ function App(props) {
           </Typography>
           <Tabs value={value} onChange={handleChange}
             aria-label="nav tabs example">
-            <LinkTab label="About me" href="#aboutme" />
-            <LinkTab label="Projects" href="#projects" />
-            <LinkTab label="Resume" href="/trash" />
-            <LinkTab label="Contact" href="/spam" />
+            <LinkTab label="About me" id="aboutme" />
+            <LinkTab label="Projects" id="projects" />
+            <LinkTab label="Career" id="career" />
+            <LinkTab label="Contact" id="contact" />
           </Tabs>
         </Toolbar>
       </AppBar>
@@ -186,7 +225,7 @@ function App(props) {
       </Box>
       <Box>
         <Toolbar id="back-to-top-anchor"/>
-        <div className="container">
+        <div className="container" id="aboutme-anchor">
           <div className="border">
             <div className="shape">
               <div className="content">
@@ -194,7 +233,7 @@ function App(props) {
                   <Grid xs={4} className='avatar'>
                     <Avatar
                       alt="Nout Reusken"
-                      src="/static/images/avatar/1.jpg"
+                      src="https://avatars.githubusercontent.com/u/90160729?v=4"
                       sx={{width: 300, height: 300}}
                     />
                   </Grid>
@@ -219,57 +258,169 @@ function App(props) {
           </div>
         </div>
         <Toolbar/>
+      </Box>
+      <Toolbar/>
+      <Divider variant="middle" />
+      <div id='projects-anchor'>
+        <Toolbar/>
+        <Masonry columns={3} spacing={6}>
+          {heights.map((height, index) => {
+            if (height === 300) {
+              return (
+                <Card>
+                  <CardActionArea>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5"
+                        component="div" color="secondary">
+                        {projects[index][0]}
+                      </Typography>
+                      <Typography variant="body2" color="primary.text">
+                        {projects[index][1]}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>);
+            } else if (height === 0) {
+              return undefined;
+            } else {
+              return ( <Typography sx={{fontWeight: 'bold'}}
+                variant="h2" color='primary.text' align='center'>
+                Projects
+              </Typography>);
+            };
+          })}
+        </Masonry>
+      </div>
+      <Toolbar/>
+      <Divider variant="middle" />
+      <Box sx={{height: '1000px'}} id="career-anchor">
+        <Toolbar/>
+        <Toolbar/>
+        <Grid container>
+          <Grid xs={4}>
+            <Typography sx={{fontWeight: 'bold'}}
+              variant="h2" color='primary.text' align='center'>
+              Career
+            </Typography>
+            <Timeline position="alternate">
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  September 2019
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>Start of Bachelor Degree</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent />
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  September 2021
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>Learning Support Services</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  October 2021
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>Multi-threaded HTML WebServer Project
+                </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  January 2022
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>Student Union Assembly</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  February 2022
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>CSE 115A Project</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  June 2022
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>Smarter Balanced</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineOppositeContent color="text.secondary">
+                  September 2022
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent>E-Mail Web
+                  Application Project</TimelineContent>
+              </TimelineItem>
+            </Timeline>
+          </Grid>
+          <Grid xs={8}>
+            <Image alt="hi" height='80vh' fit='scale-down'
+              src="http://noutreusken.online/NoutReuskenResume.png"
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      <Divider variant="middle" />
+      <Box>
+        <Toolbar/>
+        <Typography sx={{fontWeight: 'bold'}}
+          variant="h2" color='primary.text' align='center'>
+          Contact
+        </Typography>
+        <Toolbar/>
+        <Box id="contact-anchor" align={'center'}
+          sx={{'& > :not(style)': {m: 1}}}>
+          <Fab variant="extended" color="secondary" aria-label="add">
+            <MailOutlineIcon sx={{mr: 1}}/>
+            Mail
+          </Fab>
+          <Fab variant="extended" color="secondary" aria-label="add">
+            <CallIcon sx={{mr: 1}}/>
+            Phone
+          </Fab>
+          <Fab variant="extended" color="secondary" aria-label="add">
+            <LinkedInIcon sx={{mr: 1}}/>
+            LinkedIn
+          </Fab>
+          <Fab variant="extended" color="secondary" aria-label="add">
+            <GitHubIcon sx={{mr: 1}}/>
+            Github
+          </Fab>
+        </Box>
         <Toolbar/>
       </Box>
-      <Masonry columns={3} spacing={3} id='projects'>
-        {heights.map((height, index) => {
-          if (height !== 125) {
-            return (
-              <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image="/icon.jpg"
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles,
-                      with over 6,000
-                      species, ranging across all continents except Antarctica
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>);
-          } else {
-            return ( <Typography sx={{fontWeight: 'bold'}}
-              variant="h2" color='secondary' align='center'>
-              Projects
-            </Typography>);
-          };
-        })}
-      </Masonry>
-      <Grid container spacing={10} sx={{height: '1000px'}}>
-        <Grid xs={8} sx={{height: '100px'}}>
-          <Item sx={{height: '80px'}}>xs=8</Item>
-        </Grid>
-        <Grid xs={4}>
-          <Item>xs=4</Item>
-        </Grid>
-        <Grid xs={4}>
-          <Item>xs=4</Item>
-        </Grid>
-        <Grid xs={8}>
-          <Item>xs=8</Item>
-        </Grid>
-      </Grid>
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
+          <KeyboardArrowUpIcon/>
         </Fab>
       </ScrollTop>
     </ThemeProvider>

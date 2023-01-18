@@ -10,15 +10,16 @@
     "url": "https://github.com/nreusken/PersonalWebsite.git"
   },
   "dependencies": {
-    "react": "*",
-    "react-dom": "*",
-    "react-router-dom": "*",
-    "@mui/material": "*", 
-    "@mui/lab": "*", 
-    "@emotion/react": "*", 
+    "@emotion/react": "*",
     "@emotion/styled": "*",
     "@mui/icons-material": "*",
-    "prop-types": "*"
+    "@mui/lab": "*",
+    "@mui/material": "*",
+    "mui-image": "^1.0.7",
+    "prop-types": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router-dom": "*"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "*",
