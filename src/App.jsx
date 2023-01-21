@@ -32,15 +32,16 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Image from 'mui-image';
-import CallIcon from '@mui/icons-material/Call';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
+// import CardMedia from '@mui/material/CardMedia';
 
 const theme = createTheme({
   palette: {
     primary: {
       // Purple and green play nicely together.
-      main: '#AA8B39',
+      main: '#AA5039',
       text: '#032536',
     },
     secondary: {
@@ -50,25 +51,40 @@ const theme = createTheme({
   },
 });
 
-const heights = [300, 125, 300, 0, 300];
-const projects = [['Mulithreaded Webserver', 'Using C programming langu'+
-  'age, created multi-threaded HTML webserver.'+
-      ' Also included a proxy that handles load balancing using multiple serv'+
-      'ers and caching on proxy server. Allowed for simultaneous connections a'+
-      'nd caching for small html files.'],
-['', ''],
-['CSE 115A: Introduction to Software Engineering Project', 'Created and fully '+
-  'deployed a full stack web application in a team of 5 members using the so'+
-  'ftware development process, Scrum. Created a social media platform, allowi'+
-  'ng users to have to comment and like certain stock option while also gettin'+
-  'g stock recommendations and stock data visualization. Used the following te'+
-  'chnologies: Flask, React.js, and PostgreSQL'], ['ggg', ''],
-['Email Web Application', 'Created a fully deployable full stack web '+
-'application by myself. Allowed different users to email other users,'+
-  ' read their incoming emails and organize their mailboxes. Created th'+
-  'e web application using a N.E.R.P(node.js, ExpressJS, ReactJS, Postgre'+
-  'SQL) web application stack. Also created front-end and back-end test fo'+
-  'r quality assurance.'], ['ggg', '']];
+const heights = [125, 0, 300, 300, 300, 300, 300];
+const projects = [['', ''], ['', ''],
+  ['Multi-threaded Webserver', 'Using C programming langu'+
+    'age, created multi-threaded HTML webserver.'+
+    ' Also included a proxy that handles load balancing using multiple se'+
+    'rvers and caching on proxy server. Allowed for simultaneous connecti'+
+    'ons and caching for small html files.', 'https://github.com/nreusken/SchoolProjects/tree/main/cse-130/asgn3'],
+  ['CSE 115A: Introduction to Software Engineering Project',
+    'Created and fully '+
+    'deployed a full stack web application in a team of 5 members using the so'+
+    'ftware development process, Scrum. Created a social media platform, allo'+
+    'wing users to have to comment and like certain stock option while also ge'+
+    'tting stock recommendations and stock data visualization. Used the foll'+
+    'owing technologies: Flask, React.js, and PostgreSQL', 'https://github.com/CSE115aStock/StockCSE115A'],
+  ['Reuters Topic Classification Using A RNN Model', 'Used the Reuters newswi'+
+    're(https://keras.io/api/datasets/reuters/)classification dataset, which has '+
+    'text paired with 46 topics as labels, to create a model that predicts top'+
+    'ics dicussed inteh text. You can see what these labels re'+
+    'present(https://martin-thoma.com/nlp-reuters/). Analyzed the tex'+
+    't and classify the text into one of the 46 classes',
+  'https://colab.research.google.com/drive/1ixvixYxEqofjZXDdLhrHLzHrW2f5dgZg?usp=sharing'],
+  ['Email Web Application', 'Created a fully deployable full stack web '+
+  'application by myself. Allowed different users to email other users,'+
+    ' read their incoming emails and organize their mailboxes. Created th'+
+    'e web application using a N.E.R.P(node.js, ExpressJS, ReactJS, Postgre'+
+    'SQL) web application stack. Also created front-end and back-end test fo'+
+    'r quality assurance.', 'https://youtu.be/GPn9VbJM_64'],
+  ['Gesture Recognition Using A CNN Model',
+    'The model focuses on classifying hand gesture images '+
+    'using convolutional neural networks. Specifically, given an image of a '+
+    'hand showing one of the letters, we want to detect which letter is bein'+
+    'g represented. This is done using a self trained model and pretrained mo'+
+    'del',
+    'https://colab.research.google.com/drive/1M9xr0QHdmSYw_mr9TsKCZNsmGVivCSBK?usp=sharing']];
 
 // const Item = styled(Paper)(({theme}) => ({
 //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -199,6 +215,20 @@ function LinkTab(props) {
  * @return {object} JSX
  */
 function App(props) {
+  const winDims = () => ({
+    width: window.innerWidth,
+  });
+  const [width, setWidth] = React.useState(winDims());
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWidth(winDims());
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -213,7 +243,8 @@ function App(props) {
             Nout Reusken
           </Typography>
           <Tabs value={value} onChange={handleChange}
-            aria-label="nav tabs example">
+            aria-label="nav tabs example"
+            sx={{display: width.width > 750 ? true : 'none'}}>
             <LinkTab label="About me" id="aboutme" />
             <LinkTab label="Projects" id="projects" />
             <LinkTab label="Career" id="career" />
@@ -230,14 +261,15 @@ function App(props) {
             <div className="shape">
               <div className="content">
                 <Grid container spacing={20}>
-                  <Grid xs={4} className='avatar'>
+                  <Grid xs={width.width > 850 ? 4 : 0} className='avatar'
+                    sx={{display: width.width > 850 ? true : 'none'}}>
                     <Avatar
                       alt="Nout Reusken"
                       src="https://avatars.githubusercontent.com/u/90160729?v=4"
                       sx={{width: 300, height: 300}}
                     />
                   </Grid>
-                  <Grid xs={8}>
+                  <Grid xs={width.width > 850 ? 8 : 12}>
                     <Typography sx={{fontWeight: 'light'}}
                       variant="h2" color='primary.text'>
                       Meet
@@ -246,8 +278,8 @@ function App(props) {
                       variant="h2" color='secondary'>
                       Nout Reusken
                     </Typography>
-                    <Typography sx={{fontWeight: 'light'}}
-                      variant="h6" color='#113C51'>
+                    <Typography
+                      variant="h6" color='primary.text'>
                         - Student at University of Califonia, Santa Cruz.
                         Studying Computer Science, BS.
                     </Typography>
@@ -263,12 +295,12 @@ function App(props) {
       <Divider variant="middle" />
       <div id='projects-anchor'>
         <Toolbar/>
-        <Masonry columns={3} spacing={6}>
+        <Masonry columns={(width.width > 750 ? 3 : 1)} spacing={6}>
           {heights.map((height, index) => {
             if (height === 300) {
               return (
                 <Card>
-                  <CardActionArea>
+                  <CardActionArea href={projects[index][2]}>
                     <CardContent>
                       <Typography gutterBottom variant="h5"
                         component="div" color="secondary">
@@ -281,7 +313,7 @@ function App(props) {
                   </CardActionArea>
                 </Card>);
             } else if (height === 0) {
-              return undefined;
+              return <Box sx={{height: 35}}/>;
             } else {
               return ( <Typography sx={{fontWeight: 'bold'}}
                 variant="h2" color='primary.text' align='center'>
@@ -293,11 +325,12 @@ function App(props) {
       </div>
       <Toolbar/>
       <Divider variant="middle" />
-      <Box sx={{height: '1000px'}} id="career-anchor">
+      <Box sx={{height: width.width > 850 ? '1000px' :
+        '1550px'}} id="career-anchor">
         <Toolbar/>
         <Toolbar/>
         <Grid container>
-          <Grid xs={4}>
+          <Grid xs={width.width > 850 ? 4 : 12}>
             <Typography sx={{fontWeight: 'bold'}}
               variant="h2" color='primary.text' align='center'>
               Career
@@ -337,7 +370,9 @@ function App(props) {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent>Multi-threaded HTML WebServer Project
+                <TimelineContent>
+                  Multi-threaded HTML WebServer Project
+                  & Machine Learning Projects
                 </TimelineContent>
               </TimelineItem>
               <TimelineItem>
@@ -382,10 +417,20 @@ function App(props) {
               </TimelineItem>
             </Timeline>
           </Grid>
-          <Grid xs={8}>
-            <Image alt="hi" height='80vh' fit='scale-down'
+          <Grid xs={width.width > 850 ? 8 : 12} container direction="column"
+            alignItems="center"
+            justify="center">
+            <Card sx={{maxWidth: 500}} >
+              <CardActionArea
+                href='http://noutreusken.online/NoutReuskenResume.pdf'>
+                <Image alt="hi" height='80vh' fit='scale-down'
+                  src="http://noutreusken.online/NoutReuskenResume.png"
+                />
+              </CardActionArea>
+            </Card>
+            {/* <Image alt="hi" height='80vh' fit='scale-down'
               src="http://noutreusken.online/NoutReuskenResume.png"
-            />
+            /> */}
           </Grid>
         </Grid>
       </Box>
@@ -399,19 +444,23 @@ function App(props) {
         <Toolbar/>
         <Box id="contact-anchor" align={'center'}
           sx={{'& > :not(style)': {m: 1}}}>
-          <Fab variant="extended" color="secondary" aria-label="add">
+          <Fab variant="extended" color="secondary" aria-label="mail"
+            href="mailto:nreusken@hotmail.com">
             <MailOutlineIcon sx={{mr: 1}}/>
             Mail
           </Fab>
-          <Fab variant="extended" color="secondary" aria-label="add">
-            <CallIcon sx={{mr: 1}}/>
-            Phone
+          <Fab variant="extended" color="secondary" aria-label="handshake"
+            href="https://app.joinhandshake.com/stu/users/22336803">
+            <HandshakeIcon sx={{mr: 1}}/>
+            Handshake
           </Fab>
-          <Fab variant="extended" color="secondary" aria-label="add">
+          <Fab variant="extended" color="secondary" aria-label="linkedin"
+            href="https://www.linkedin.com/in/nout-reusken/">
             <LinkedInIcon sx={{mr: 1}}/>
             LinkedIn
           </Fab>
-          <Fab variant="extended" color="secondary" aria-label="add">
+          <Fab variant="extended" color="secondary" aria-label="git"
+            href="https://github.com/nreusken">
             <GitHubIcon sx={{mr: 1}}/>
             Github
           </Fab>
